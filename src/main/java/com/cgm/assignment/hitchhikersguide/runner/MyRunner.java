@@ -47,41 +47,42 @@ public class MyRunner implements CommandLineRunner {
     private static final String answerText = "answer";
 
     @Override
-    public void run(String... args) throws IOException {
-        InputStreamReader inputStreamReader = new InputStreamReader(System.in);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        while (true) {
-            out.println(operationsList);
-            try {
-                int inputOperation = Integer.parseInt(bufferedReader.readLine());
-                if (inputOperation == 1) {
-                    out.println(note + charLimitQuestion + charLimitAnswer);
-                    out.println(qNaFormat);
-                    String[] qNa = splittQnA(bufferedReader.readLine());
-                    validateQnA(qNa);
-                    hitchhikerService.addAnswer(qNa[0], splittAnswers(qNa[1]));
-                    out.println(addQnASuccess);
-                } else if (inputOperation == 2) {
-                    out.println(note + charLimitQuestion);
-                    out.println(questionFormat);
-                    String question = bufferedReader.readLine();
-                    validateQuestion(question);
-                    hitchhikerService.getAnswer(question).forEach(out::println);
-                } else if (inputOperation == 0) {
-                    break;
-                } else {
-                    out.println(String.format(invalidSelection, inputOperation));
+    public void run(String... args) throws IOException{
+
+
+        try(InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
+            while (true) {
+                out.println(operationsList);
+                try {
+                    int inputOperation = Integer.parseInt(bufferedReader.readLine());
+                    if (inputOperation == 1) {
+                        out.println(note + charLimitQuestion + charLimitAnswer);
+                        out.println(qNaFormat);
+                        String[] qNa = splittQnA(bufferedReader.readLine());
+                        validateQnA(qNa);
+                        hitchhikerService.addAnswer(qNa[0], splittAnswers(qNa[1]));
+                        out.println(addQnASuccess);
+                    } else if (inputOperation == 2) {
+                        out.println(note + charLimitQuestion);
+                        out.println(questionFormat);
+                        String question = bufferedReader.readLine();
+                        validateQuestion(question);
+                        hitchhikerService.getAnswer(question).forEach(out::println);
+                    } else if (inputOperation == 0) {
+                        break;
+                    } else {
+                        out.println(String.format(invalidSelection, inputOperation));
+                    }
+                } catch (NumberFormatException | InputMismatchException ex) {
+                    out.println(invalidInput);
+                } catch (IOException e) {
+                    out.println(readException);
+                } catch (LengthExceededException | InvalidInput ex) {
+                    out.println(ex.getMessage());
                 }
-            } catch (NumberFormatException | InputMismatchException ex) {
-                out.println(invalidInput);
-            } catch (IOException e) {
-                out.println(readException);
-            } catch (LengthExceededException | InvalidInput ex) {
-                out.println(ex.getMessage());
             }
         }
-        bufferedReader.close();
-        inputStreamReader.close();
 
     }
 
