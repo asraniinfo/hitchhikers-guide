@@ -47,7 +47,7 @@ public class MyRunner implements CommandLineRunner {
     private static final String answerText = "answer";
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
         InputStreamReader inputStreamReader = new InputStreamReader(System.in);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         while (true) {
@@ -80,6 +80,9 @@ public class MyRunner implements CommandLineRunner {
                 out.println(ex.getMessage());
             }
         }
+        bufferedReader.close();
+        inputStreamReader.close();
+
     }
 
     boolean validateQnA(String[] qNa) {
