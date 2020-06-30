@@ -13,15 +13,15 @@ public class HitchhikerServiceImpl implements  HitchhikerService{
 
     @Override
     public List<String> getAnswer(String question) {
-        final List<String> strings;
+        final List<String> answers;
         if (null != qNaMap.get(question)) {
-            strings = qNaMap.get(question);
-        } else strings = List.of(ANSWER_TO_EVERYTHING);
-        return strings;
+            answers = qNaMap.get(question);
+        } else answers = List.of(ANSWER_TO_EVERYTHING);
+        return answers;
     }
 
     @Override
-    public void addAnswer(String question, List<String> answer) {
-        qNaMap.put(question,answer);
+    public void addAnswer(String question, List<String> answers) {
+        qNaMap.put(question,answers);
     }
 }
