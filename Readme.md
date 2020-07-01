@@ -58,3 +58,6 @@ Examples:
 			Answer will be 
 
 			•	the answer to life, universe and everything is 42
+
+
+Assumptions: No special characters allowed except ('),(.)(’)
