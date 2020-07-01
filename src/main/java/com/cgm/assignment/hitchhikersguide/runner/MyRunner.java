@@ -43,7 +43,7 @@ public class MyRunner implements CommandLineRunner {
     private static final String questionRegex = "^[a-zA-Z0-9 '.’]{1,255}\\?";
 
     @Override
-    public void run(String... args) throws IOException {
+    public void run(String... args) {
         try (InputStreamReader inputStreamReader = new InputStreamReader(System.in);
              BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
             while (true) {
@@ -78,6 +78,8 @@ public class MyRunner implements CommandLineRunner {
                     break;
                 }
             }
+        } catch (IOException e) {
+            out.println("Technical error. Please contact system administrator");
         }
 
     }
