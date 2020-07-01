@@ -22,7 +22,7 @@ import static java.lang.System.out;
 @Component
 public class MyRunner implements CommandLineRunner {
     private static final HitchhikerService hitchhikerService = new HitchhikerServiceImpl();
-    private static final String readException = "There is error in reading input, Please try again later \n";
+    private static final String readException = "There is error in reading input, Please try again\n";
     private static final String operationsList = "\nPlease choose the operation from list \n" +
             "To add question and answer type: 1 \n" +
             "To find the answer to your question type: 2 \n" +
@@ -51,19 +51,9 @@ public class MyRunner implements CommandLineRunner {
                 try {
                     int inputOperation = Integer.parseInt(bufferedReader.readLine());
                     if (inputOperation == 1) {
-                        out.println(note + charLimitQuestion + charLimitAnswer);
-                        out.println(qNaFormat);
-                        Map<String, List<String>> qNa = splitQnA(bufferedReader.readLine());
-                        qNa.forEach(hitchhikerService::addAnswer);
-                        out.println(addQnASuccess);
+                        addQnA(bufferedReader);
                     } else if (inputOperation == 2) {
-                        out.println(note + charLimitQuestion);
-                        out.println(questionFormat);
-                        String question = bufferedReader.readLine();
-                        if (!validateQuestion(question)) {
-                            throw new InvalidInput(invalidInput);
-                        }
-                        hitchhikerService.getAnswer(question).forEach(s -> out.println("•\t"+s));
+                        getAnswer(bufferedReader);
                     } else if (inputOperation == 0) {
                         break;
                     } else {
@@ -82,6 +72,34 @@ public class MyRunner implements CommandLineRunner {
             out.println("Technical error. Please contact system administrator");
         }
 
+    }
+
+    /**
+     * add question and answer opration
+     * @param reader buffered reader
+     * @throws IOException
+     */
+    void addQnA(BufferedReader reader) throws IOException {
+        out.println(note + charLimitQuestion + charLimitAnswer);
+        out.println(qNaFormat);
+        Map<String, List<String>> qNa = splitQnA(reader.readLine());
+        qNa.forEach(hitchhikerService::addAnswer);
+        out.println(addQnASuccess);
+    }
+
+    /**
+     * print answers to the question
+     * @param reader buffered reader
+     * @throws IOException
+     */
+    void getAnswer(BufferedReader reader) throws IOException {
+        out.println(note + charLimitQuestion);
+        out.println(questionFormat);
+        String question = reader.readLine();
+        if (!validateQuestion(question)) {
+            throw new InvalidInput(invalidInput);
+        }
+        hitchhikerService.getAnswer(question).forEach(s -> out.println("•\t"+s));
     }
 
     /**
