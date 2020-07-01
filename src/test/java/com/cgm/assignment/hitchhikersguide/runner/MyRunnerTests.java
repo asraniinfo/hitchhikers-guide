@@ -45,8 +45,8 @@ class MyRunnerTests {
     }
 
     @Test
-    void validateSplitQnAMultiAnswer() {
-        Assertions.assertThrows(InvalidInput.class, () -> myRunner.splitQnA(qNa));
+    void validateSplitQnAInvalidInput() {
+        Assertions.assertThrows(InvalidInput.class, () -> myRunner.splitQnA(lengthExceededString));
     }
 
 }
