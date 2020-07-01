@@ -36,9 +36,10 @@ public class MyRunner implements CommandLineRunner {
             "•\t<question>? here Char “?” is the identifier of question";
     private static final String qNaFormat = "\nPlease type your question and answer in following format: \n" +
             "•\t<question>? “<answer1>” “<answer2>” “<answerX>”\n" +
-            "•\tEvery Question needs to have at least one answer but can have unlimited answers all inside of char “ \n";
+            "•\tEvery Question needs to have at least one answer but can have unlimited answers all inside of char “ \n" +
+            "•\tSpecial character not allowed except('),(.)(’)“ \n";
     private static final String addQnASuccess = "Answer to the question is added in the system successfully";
-    private static final String qNaRegex = "^[a-zA-Z0-9 '.’]{1,255}\\?( \\\"[a-zA-Z0-9 '.’-]{1,255}\\\")+$";
+    private static final String qNaRegex = "^[a-zA-Z0-9 '.’]{1,255}\\?( \\\"[a-zA-Z0-9 '.’]{1,255}\\\")+$";
     private static final String questionRegex = "^[a-zA-Z0-9 '.’]{1,255}\\?";
 
     @Override
