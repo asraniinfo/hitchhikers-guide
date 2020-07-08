@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class HitchhikerServiceImpl implements  HitchhikerService{
@@ -13,11 +14,8 @@ public class HitchhikerServiceImpl implements  HitchhikerService{
 
     @Override
     public List<String> getAnswer(String question) {
-        final List<String> answers;
-        if (null != qNaMap.get(question)) {
-            answers = qNaMap.get(question);
-        } else answers = List.of(ANSWER_TO_EVERYTHING);
-        return answers;
+        return Optional.ofNullable(qNaMap.get(question))
+                .orElse(List.of(ANSWER_TO_EVERYTHING));
     }
 
     @Override
